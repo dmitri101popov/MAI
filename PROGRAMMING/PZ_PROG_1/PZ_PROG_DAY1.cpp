@@ -1,153 +1,69 @@
 #include <iostream>
-
-class ArrayCS {
-
-private:
-
-    int size_array;
-    int* glav_array;
-
-    bool getparametr(int pozishon);
-
+#include <stdlib.h>
+class Massiv {
+    
 public:
+    int len;
+    Massiv(int lenParameter)
+    {   
+        len = lenParameter;
+    }
+    ~Massiv()
+    {
 
-    ArrayCS(int size);
-    ArrayCS(const ArrayCS& second_array);
-    ~ArrayCS();
+    }
+    
+    int* array = (int*) malloc (len * sizeof (int));
+    int* ptr = array;
 
-    void see_array();
-    void setparametr(int number, int pozishon);
-    void pushend_sdvig(int number);
-    void sum_subt(ArrayCS& first_array);
-    void pushend(int number);
-    void getterwindow(int pozishon);
+    void show() 
+	{
+        std::cout << ptr;
+    }
+    
+    void setter(int num, int setterIndex) {
+        if (num >= -100 && num <= 100 && setterIndex < len) 
+        {
+            ptr[setterIndex] = num;
+            
+        }
+    }
+    
+    void getter(int getterIndex) 
+    {
+        if (getterIndex < len) std::cout << ptr[getterIndex]; // trojan warn
+    }
+    
+    void copy(Massiv from, Massiv to)
+	{
+    	for(int i = 0; i < len; i++) to.ptr[i] = from.ptr[i];
+	}
+	void beyond(int num)
+	{	
+		if(num >= -100 && num <= 100)
+		{
+		len += 1;
+		array = (int*) realloc (array, len * sizeof (int));
+		ptr[len - 1] = num;
+		}
+	}
+	
 };
-
-bool ArrayCS::getparametr(int pozishon)
-{
-    if (pozishon <= size_array && pozishon > 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
-
-}
-
-ArrayCS::ArrayCS(int size) : size_array(size)
-{
-    glav_array = new int[size];
-
-    for (int i = 0; i < size; ++i) glav_array[i] = i;
-}
-
-ArrayCS::ArrayCS(const ArrayCS& first_array) : size_array(first_array.size_array), glav_array(nullptr)
-{
-    glav_array = new int[size_array];
-
-    for (int i = 0; i < size_array; ++i)
-    {
-        glav_array[i] = first_array.glav_array[i];
-    }
-}
-
-
-ArrayCS::~ArrayCS()
-{
-    delete[] glav_array;
-}
-
-void ArrayCS::see_array()
-{
-
-    for (int i = 0; i < size_array; ++i)
-    {
-        std::cout << glav_array[i] << ' ';
-    }
-
-    std::cout << std::endl;
-
-}
-
-void ArrayCS::setparametr(int number, int pozishon)
-{
-
-    if (number >= -100 && number <= 100 && getparametr(pozishon))
-    {
-        glav_array[pozishon] = number;
-    }
-
-}
-
-void ArrayCS::pushend_sdvig(int number)
-{
-
-    setparametr(number, size_array);
-
-    for (int i = 1; i < size_array; ++i)
-    {
-        glav_array[i - 1] = glav_array[i];
-    }
-
-    glav_array[size_array - 1] = number;
-
-}
-
-void ArrayCS::pushend(int number)
-{
-    if (number <= 100 && number >= -100) {
-        int* next_array = new int[size_array + 1];
-
-        for (int i = 0; i < size_array; ++i) next_array[i] = glav_array[i];
-
-        next_array[size_array] = number;
-        ++size_array;
-
-        delete[] glav_array;
-        glav_array = next_array;
-
-        size_array++;
-    }
-
-}
-
-void ArrayCS::getterwindow(int pozishon)
-{
-    if (getparametr(pozishon)) std::cout << '\n' << "You number" << glav_array[pozishon] << '\n';
-}
-
-void ArrayCS::sum_subt(ArrayCS& first_array)
-{
-
-    int sumone = 0;
-    int sumtwo = 0;
-
-    for (int i = 0; i < size_array; i++)
-    {
-        sumone += glav_array[i];
-    }
-
-    for (int i = 0; i < first_array.size_array; ++i)
-    {
-        sumtwo += first_array.glav_array[i];
-    }
-
-    std::cout << "Sum: " << sumone + sumtwo << '\n' << "Subt: " << sumone - sumtwo << std::endl;
-
-}
+	
+	
+int* sum(Massiv* array1, Massiv* array2)
+	{
+		int* arrayFullSum = (int*) malloc (array1->len * sizeof (int));
+		for(int i = 0; i < array1->len; i++)
+		{
+			arrayFullSum[i] = array1->ptr[i] + array2->ptr[i];
+		}
+		
+		return arrayFullSum;	
+	}
 
 
 int main()
 {
-    ArrayCS test(7);
-    test.see_array();
-    test.pushend(4);
-    test.see_array();
-
-    ArrayCS test1 = test;
-    test1.see_array();
-
-    test.sum_subt(test1);
-
-    return 0;
+    
 }

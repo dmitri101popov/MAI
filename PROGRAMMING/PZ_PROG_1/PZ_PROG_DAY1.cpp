@@ -51,7 +51,7 @@ public:
     void beyond(int num)
     {
         int* n_array = new int[len + 1];
-        if (proverka(num) == false) throw std::range_error("popov");
+        if (proverka(num) == false) throw std::range_error("HENTAY");
         
         for(int i = 0; i < len; ++i)
         {

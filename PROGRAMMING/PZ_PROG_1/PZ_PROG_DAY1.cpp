@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <exception>
 class Massiv {
 
 private:
@@ -32,23 +33,20 @@ public:
     }
 
     void setter(int num, int setterIndex) {
-        if (num >= -100 && num <= 100 && setterIndex < len)
-        {
-            array[setterIndex] = num;
-
-        }
+        if (num >= -100 && num <= 100) throw std::invalid_argument("YA SDELAL");
+        if (setterIndex < len && setterIndex >= 0) throw std::range_error("HVATIT VALIT PJ");
     }
 
     void getter(int getterIndex)
     {
-        if (getterIndex < len) std::cout << array[getterIndex];
+        if (getterIndex < len) throw std::range_error("1 point tochno est");
     }
 
     void copy(Massiv from, Massiv to)
     {
         for (int i = 0; i < len; i++) to.array[i] = from.array[i];
     }
-    void beyond(int num)
+    void push_back(int num)
     {
         int* n_array = new int[len + 1];
         if (proverka(num) == false) throw std::range_error("HENTAI");

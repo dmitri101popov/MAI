@@ -59,6 +59,7 @@ public:
 
         delete[] array;
         array = n_array;
+        len++;
     }
 
 };

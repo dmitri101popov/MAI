@@ -1,69 +1,64 @@
 #include <iostream>
 #include <stdlib.h>
 class Massiv {
-    
+
 public:
+    int* array;
+
     int len;
-    Massiv(int lenParameter)
-    {   
-        len = lenParameter;
+    Massiv(int lenParameter): len(lenParameter)
+    {
+        array = (int*)malloc(len * sizeof(int));
     }
     ~Massiv()
     {
-
+        delete[] array;
     }
-    
-    int* array = (int*) malloc (len * sizeof (int));
-    int* ptr = array;
 
-    void show() 
-	{
-        std::cout << ptr;
+    void show()
+    {
+        std::cout << array;
     }
-    
+
     void setter(int num, int setterIndex) {
-        if (num >= -100 && num <= 100 && setterIndex < len) 
+        if (num >= -100 && num <= 100 && setterIndex < len)
         {
-            ptr[setterIndex] = num;
-            
+            array[setterIndex] = num;
+
         }
     }
-    
-    void getter(int getterIndex) 
+
+    void getter(int getterIndex)
     {
-        if (getterIndex < len) std::cout << ptr[getterIndex]; // trojan warn
+        if (getterIndex < len) std::cout << array[getterIndex];
     }
-    
+
     void copy(Massiv from, Massiv to)
-	{
-    	for(int i = 0; i < len; i++) to.ptr[i] = from.ptr[i];
-	}
-	void beyond(int num)
-	{	
-		if(num >= -100 && num <= 100)
-		{
-		len += 1;
-		array = (int*) realloc (array, len * sizeof (int));
-		ptr[len - 1] = num;
-		}
-	}
-	
+    {
+        for (int i = 0; i < len; i++) to.array[i] = from.array[i];
+    }
+    void beyond(int num)
+    {
+        if (num >= -100 && num <= 100)
+        {
+            len += 1;
+            delete[] array;
+            array[len - 1] = num;
+        }
+    }
+
 };
-	
-	
-int* sum(Massiv* array1, Massiv* array2)
-	{
-		int* arrayFullSum = (int*) malloc (array1->len * sizeof (int));
-		for(int i = 0; i < array1->len; i++)
-		{
-			arrayFullSum[i] = array1->ptr[i] + array2->ptr[i];
-		}
-		
-		return arrayFullSum;	
-	}
 
 
-int main()
+void sum(Massiv* array1, Massiv* array2)
 {
-    
+    for (int i = 0; i < array1->len; i++)
+    {
+       array1->array[i] += array2->array[i];
+    }
+}
+
+
+int main() {
+
 }

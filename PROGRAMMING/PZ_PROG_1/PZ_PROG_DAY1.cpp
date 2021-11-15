@@ -2,6 +2,17 @@
 #include <stdlib.h>
 class Massiv {
 
+private:
+    bool proverka(int& num)
+    {
+        if(num >= -100 && num <= 100)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 public:
     int* array;
 
@@ -17,7 +28,7 @@ public:
 
     void show()
     {
-        std::cout << array;
+        for (int i = 0; i < len; ++i) std::cout << array[i];
     }
 
     void setter(int num, int setterIndex) {
@@ -39,12 +50,17 @@ public:
     }
     void beyond(int num)
     {
-        if (num >= -100 && num <= 100)
+        int* n_array = new int[len + 1];
+        if (proverka(num) == false) throw std::range_error("popov");
+        
+        for(int i = 0; i < len; ++i)
         {
-            len += 1;
-            delete[] array;
-            array[len - 1] = num;
+            n_array[i] = array[i];
         }
+        n_array[len] = num;
+
+        delete[] array;
+        array = n_array;
     }
 
 };
